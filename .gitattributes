@@ -1,0 +1,4 @@
+*.keras filter=lfs diff=lfs merge=lfs -text
+*.h5 filter=lfs diff=lfs merge=lfs -text
+ModeloS.keras filter=lfs diff=lfs merge=lfs -text
+pesosS.weights.h5 filter=lfs diff=lfs merge=lfs -text
