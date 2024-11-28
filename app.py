@@ -1,7 +1,7 @@
 from flask import Flask, Response
 from video_stream import generate_frames  # Importa la lógica de transmisión
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 @app.route('/video_feed')
 def video_feed():
@@ -23,5 +23,5 @@ def index():
     </html>
     '''
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
