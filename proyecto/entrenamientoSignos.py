@@ -2,30 +2,29 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
-# Directorio de entrenamiento
-train_dir = r'D:\Octavo Semestre\Vision Artificial\Actividad. Entrenando una CNN'
-
-# Generador de imágenes para ajuste y aumento del conjunto de datos 
+# Generador de imágenes para ajustar y aumentar el conjunto de datos 
 datagen = ImageDataGenerator(
     rescale=1./255,
     shear_range=0.2,
     zoom_range=0.2,
-    rotation_range=20,
-    brightness_range=(0.8, 1.2),
+    horizontal_flip=True,
     validation_split=0.2)
+
+# Directorio de entrenamiento
+train_dir = 'D:\Octavo Semestre\Vision Artificial\Actividad. Entrenando una CNN\proyecto'
 
 train_generator = datagen.flow_from_directory(
     train_dir,
     target_size=(200, 200),
     batch_size=32,
-    class_mode='categorical',
+    class_mode='categorical',  # Asegúrate de usar 'categorical'
     subset='training')
 
 validation_generator = datagen.flow_from_directory(
     train_dir,
     target_size=(200, 200),
     batch_size=32,
-    class_mode='categorical',
+    class_mode='categorical',  # Asegúrate de usar 'categorical'
     subset='validation')
 
 # Crear el modelo
@@ -39,7 +38,7 @@ model = Sequential([
     Flatten(),
     Dropout(0.5),
     Dense(128, activation='relu'),
-    Dense(4, activation='softmax')  # Cambiado a 4 para 4 clases
+    Dense(3, activation='softmax')  # 3 clases: amor_paz, aceptacion, declinacion
 ])
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -48,5 +47,5 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 history = model.fit(train_generator, epochs=10, validation_data=validation_generator)
 
 # Guardar el modelo y los pesos usando el formato sugerido
-model.save('ModeloS.keras')
-model.save_weights('pesosS.weights.h5')
+model.save('ModeloS.keras')  # Guardar el modelo en el nuevo formato
+model.save_weights('pesosS.weights.h5')  # Guardar los pesos con la extensión correcta
